@@ -1,6 +1,7 @@
 package fr.lenglet.sparktoolbox.exercices
 
 import kafka.serializer.StringDecoder
+import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
 
 /**
   * Date :::: 10/08/2018
@@ -35,17 +36,8 @@ object Exercice4 {
 
     val sparkConf = new SparkConf().setAppName("Exercice4")
     val ssc = new StreamingContext(sparkConf, Seconds(10))
-    val topicsSet = topics.split(",").toSet
-    val kafkaParams = Map[String, String](
-      "bootstrap.servers" -> brokers,
-      "zookeeper.connect" -> zookep,
-      "group.id" -> "default",
-      "zookeeper.connection.timeout.ms" -> "1000",
-      "security.protocol" -> "SASL_PLAINTEXT",
-      "sasl.kerberos.service.name" -> "kafka",
-      "auto.offset.reset" -> "latest",
-      "key.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer",
-      "value.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer")
+
+    val kread = new KafkaRead();
 
     /* Kerberos */
 
@@ -55,7 +47,7 @@ object Exercice4 {
     val messages = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
+      ConsumerStrategies.Subscribe[String, String](kread.setTopic(topics), kread.setKafkaParams(brokers,zookep)))
 
 
     messages.foreachRDD(rdd =>

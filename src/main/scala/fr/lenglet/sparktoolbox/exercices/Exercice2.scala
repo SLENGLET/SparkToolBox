@@ -37,19 +37,10 @@ object Exercice2 {
 
 
     val Array(brokers, zookep, topics) = args
-
-
     val sparkConf = new SparkConf().setAppName("Exercice2")
     val ssc = new StreamingContext(sparkConf, Seconds(10))
-
     val kread = new KafkaRead();
-
-    val messages = KafkaUtils.createDirectStream[String, String](
-      ssc,
-      LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](kread.setTopic(topics), kread.setKafkaParams(brokers,zookep)))
-
-
+    val messages = kread.createMessages(ssc,LocationStrategies.PreferConsistent,ConsumerStrategies.Subscribe[String, String](kread.setTopic(topics), kread.setKafkaParams(brokers,zookep)))
     val messages2 = messages.map(x => (x.offset(), x.value()))
 
     messages2.foreachRDD { rdd =>

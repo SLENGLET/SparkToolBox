@@ -2,9 +2,10 @@ package main.scala.fr.lenglet.sparktoolbox.read.kafka
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.rdd.RDD
-import org.apache.spark.streaming.Time
+import org.apache.spark.streaming.{StreamingContext, Time}
 import org.apache.spark.streaming.dstream.InputDStream
 import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaReadConfiguration
+import org.apache.spark.streaming.kafka010._
 
 trait KafkaReadInterface {
 
@@ -13,6 +14,10 @@ trait KafkaReadInterface {
   }
 
   def setKafkaParams(brokers: String, zookep: String): Map[String, String] {
+
+  }
+
+  def createMessages(ssc: StreamingContext, ls: LocationStrategy, cs: ConsumerStrategy[String, String]): Unit {
 
   }
 }
@@ -37,6 +42,12 @@ class KafkaRead extends KafkaReadInterface {
       "value.deserializer" -> KafkaReadConfiguration.valuedeserializer)
     MapKafKaParams
   }
+
+  override def createMessages(ssc: StreamingContext, ls: LocationStrategy, cs: ConsumerStrategy[String, String]): InputDStream[ConsumerRecord[String, String]] = {
+    val messages = KafkaUtils.createDirectStream[String, String](ssc,ls,cs)
+    messages
+  }
+
 }
 
 

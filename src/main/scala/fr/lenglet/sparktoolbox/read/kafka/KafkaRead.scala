@@ -28,13 +28,13 @@ class KafkaRead extends KafkaReadInterface {
     val MapKafKaParams = Map[String, String](
       "bootstrap.servers" -> brokers,
       "zookeeper.connect" -> zookep,
-      "group.id" -> "default",
-      "zookeeper.connection.timeout.ms" -> "1000",
-      "security.protocol" -> "SASL_PLAINTEXT",
-      "sasl.kerberos.service.name" -> "kafka",
-      "auto.offset.reset" -> "latest",
-      "key.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer",
-      "value.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer")
+      "group.id" -> KafkaReadConfiguration.groupid,
+      "zookeeper.connection.timeout.ms" -> KafkaReadConfiguration.zookeeperconnectiontimeoutms,
+      "security.protocol" -> KafkaReadConfiguration.securityprotocol,
+      "sasl.kerberos.service.name" -> KafkaReadConfiguration.saslkerberosservicename,
+      "auto.offset.reset" -> KafkaReadConfiguration.autooffsetreset,
+      "key.deserializer" -> KafkaReadConfiguration.keydeserializer,
+      "value.deserializer" -> KafkaReadConfiguration.valuedeserializer)
     MapKafKaParams
   }
 }

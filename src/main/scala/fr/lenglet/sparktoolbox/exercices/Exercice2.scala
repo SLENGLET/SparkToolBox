@@ -7,8 +7,8 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import kafka.serializer.StringDecoder
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.streaming.dstream.{DStream, InputDStream}
-
 import main.scala.fr.lenglet.sparktoolbox.read
+import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
 
 /**
   * Date : 07/04/2018
@@ -29,6 +29,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.spark.unsafe.types.UTF8String
 
+import main.scala.fr.lenglet.sparktoolbox.read.kafka
+
 
 object Exercice2 {
   def main(args: Array[String]) {
@@ -39,21 +41,13 @@ object Exercice2 {
 
     val sparkConf = new SparkConf().setAppName("Exercice2")
     val ssc = new StreamingContext(sparkConf, Seconds(10))
-    val topicsSet = topics.split(",").toSet
-    val kafkaParams = Map[String, String](
-      "bootstrap.servers" -> brokers,
-      "zookeeper.connect" -> zookep,
-      "group.id" -> "default",
-      "zookeeper.connection.timeout.ms" -> "1000",
-      "security.protocol" -> "SASL_PLAINTEXT",
-      "sasl.kerberos.service.name" -> "kafka",
-      "auto.offset.reset" -> "latest",
-      "key.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer",
-      "value.deserializer" -> "org.apache.kafka.common.serialization.StringDeserializer")
+
+    val kread = new KafkaRead();
+
     val messages = KafkaUtils.createDirectStream[String, String](
       ssc,
       LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
+      ConsumerStrategies.Subscribe[String, String](kread.setTopic(topics), kread.setKafkaParams(brokers,zookep)))
 
 
     val messages2 = messages.map(x => (x.offset(), x.value()))

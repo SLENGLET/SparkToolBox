@@ -52,14 +52,12 @@ object Exercice2 {
             try {
 
               val hMap = messageToMap(p)
-
-              //val hnom = hMap.getOrElse("nom", "noname")
-              //val hpnom = hMap.getOrElse("prenom", "nosurname")
-              //val hpid = hMap.getOrElse("id", 999)
               val hnom = hMap.getOrElse("nom", "noname")
               val hpnom = hMap.getOrElse("prenom", "nosurname")
               val hpid = hMap.getOrElse("id", 999)
+
               //jsonNode.hasNonNull("nom")
+
               if (hnom.contains("no value") || hpnom.contains("no value") || hpid.equals(999)) {
                 println("attributs de messages manquants")
                 println("id : " + hpid + "nom : " + hnom + "prenom : " + hpnom)

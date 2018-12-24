@@ -1,8 +1,11 @@
 package fr.lenglet.sparktoolbox.exercices
 
+import java.io.IOException
+
 import kafka.serializer.StringDecoder
 import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
 import main.scala.fr.lenglet.sparktoolbox.write.hbase.HbaseWrite
+import main.scala.fr.lenglet.sparktoolbox.write.hbase.HbaseWriteConfiguration
 
 /**
   * Date :::: 10/08/2018
@@ -50,28 +53,17 @@ object Exercice4 {
 
         rdd.foreachPartition(partition => {
 
-          val table_name = "lenglet_exercice:Personne"
-          val hbase_conf = HBaseConfiguration.create()
-          hbase_conf.addResource(new Path("/etc/hadoop/conf/core-site.xml"))
-          hbase_conf.addResource(new Path("/etc/hbase/conf/hbase-site.xml"))
-          hbase_conf.set("hbase.rpc.controllerfactory.class", "org.apache.hadoop.hbase.ipc.RpcControllerFactory")
-          hbase_conf.set("hbase.zookeeper.quorum", "datanode1.lenglet.fr,datanode2.lenglet.fr,datanode3.lenglet.fr")
-          hbase_conf.set("hbase.zookeeper.property.clientPort", "2181")
-          hbase_conf.set("hbase.master", "datanode2.lenglet.fr:16000")
-          hbase_conf.set("zookeeper.znode.parent", "/hbase-secure")
-          hbase_conf.set("hadoop.security.authentication", "kerberos")
-
-          UserGroupInformation.setConfiguration(hbase_conf)
+          UserGroupInformation.setConfiguration(HbaseWriteConfiguration.hbase_conf)
           if (UserGroupInformation.isSecurityEnabled) {
 
             val loggedUGI: UserGroupInformation = UserGroupInformation.loginUserFromKeytabAndReturnUGI("dco_app_edma@LENGLET.FR", "/etc/security/keytabs/dco_app_edma.keytab")
-            val c: Configuration = hbase_conf
+            val c: Configuration = HbaseWriteConfiguration.hbase_conf
             loggedUGI.doAs(new PrivilegedAction[Void] {
               override def run() = {
                 try {
 
                   val hConnection: HConnection = HConnectionManager.createConnection(c)
-                  val table: HTableInterface = hConnection.getTable(table_name)
+                  val table: HTableInterface = hConnection.getTable(HbaseWriteConfiguration.table_name)
 
 
                   partition.foreach(p => {
@@ -80,6 +72,11 @@ object Exercice4 {
                     hwrite.save(rowkey, "messages", p.value(), "d", table)
                   })
 
+                }
+                catch{
+                  case io: IOException => {
+                    println("io exception")
+                  }
                 }
                 null
               }

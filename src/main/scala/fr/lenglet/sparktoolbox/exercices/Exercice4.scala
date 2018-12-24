@@ -2,6 +2,7 @@ package fr.lenglet.sparktoolbox.exercices
 
 import kafka.serializer.StringDecoder
 import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
+import main.scala.fr.lenglet.sparktoolbox.write.hbase.HbaseWrite
 
 /**
   * Date :::: 10/08/2018
@@ -30,25 +31,19 @@ import org.apache.hadoop.hbase.util.Bytes
 object Exercice4 {
   def main(args: Array[String]) {
 
-
     val Array(brokers, zookep, topics) = args
-
-
     val sparkConf = new SparkConf().setAppName("Exercice4")
     val ssc = new StreamingContext(sparkConf, Seconds(10))
 
     val kread = new KafkaRead();
+    val hwrite = new HbaseWrite();
 
     /* Kerberos */
 
     System.setProperty("java.security.krb5.conf", "/etc/krb5.conf")
     System.setProperty("sun.security.krb5.debug", "true")
 
-    val messages = KafkaUtils.createDirectStream[String, String](
-      ssc,
-      LocationStrategies.PreferConsistent,
-      ConsumerStrategies.Subscribe[String, String](kread.setTopic(topics), kread.setKafkaParams(brokers,zookep)))
-
+    val messages = kread.createMessages(ssc,LocationStrategies.PreferConsistent,ConsumerStrategies.Subscribe[String, String](kread.setTopic(topics), kread.setKafkaParams(brokers,zookep)))
 
     messages.foreachRDD(rdd =>
       if (!rdd.partitions.isEmpty)
@@ -82,7 +77,7 @@ object Exercice4 {
                   partition.foreach(p => {
                     val rowkey = String.valueOf(System.currentTimeMillis() / 1000)
                     println("topic : " + p.topic() + " message : " + p.value())
-                    PutToHbase(rowkey, "messages", p.value(), "d", table)
+                    hwrite.save(rowkey, "messages", p.value(), "d", table)
                   })
 
                 }
@@ -96,13 +91,5 @@ object Exercice4 {
     ssc.start()
     ssc.awaitTermination()
     //ssc.stop()
-  }
-
-  def PutToHbase(rowkey: String, qualifier: String, message: String, cf: String, table: HTableInterface): Unit = {
-
-    val put = new Put(Bytes.toBytes(rowkey))
-    put.add(Bytes.toBytes(cf), Bytes.toBytes(qualifier), Bytes.toBytes(message))
-    table.put(put)
-
   }
 }

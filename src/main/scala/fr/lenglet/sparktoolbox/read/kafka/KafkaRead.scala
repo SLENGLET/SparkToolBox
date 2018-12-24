@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.spark.rdd.RDD
 import org.apache.spark.streaming.{StreamingContext, Time}
 import org.apache.spark.streaming.dstream.InputDStream
-import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaReadConfiguration
+
 import org.apache.spark.streaming.kafka010._
 
 trait KafkaReadInterface {
@@ -17,7 +17,7 @@ trait KafkaReadInterface {
 
   }
 
-  def createMessages(ssc: StreamingContext, ls: LocationStrategy, cs: ConsumerStrategy[String, String]): Unit {
+  def createMessages(ssc: StreamingContext, ls: LocationStrategy, cs: ConsumerStrategy[String, String]): InputDStream[ConsumerRecord[String, String]] {
 
   }
 }

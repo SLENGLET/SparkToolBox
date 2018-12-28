@@ -1,0 +1,10 @@
+1,France,Paris
+1,Angleterre,Londres
+1,France,Marseilles
+2,USA,New york
+2,Brésil,Rio
+3,Berlin,Allemagne
+4,Martinique,Sainte Luce
+4,Espagne,Madrid
+5,Portugal,Lisbonne
+5,Copenhague,Danemark

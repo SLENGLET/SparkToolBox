@@ -9,8 +9,8 @@ spark-submit \
   --master yarn \
   --deploy-mode cluster \
   --num-executors 1 --executor-memory 512M --driver-memory 512M --executor-cores 1 \
-  --principal dco_app_edma@LENGLET.FR --keytab /etc/security/keytabs/dco_app_edma.keytab \
-  --files "/home/dco_app_edma/jaas.conf" \
+  --principal app_toolbox@LENGLET.FR --keytab /etc/security/keytabs/app_toolbox.keytab \
+  --files "/home/app_toolbox/jaas.conf" \
   --driver-java-options "-Djava.security.auth.login.config=./jaas.conf" \
   --conf "spark.yarn.security.tokens.hive.enabled=false" \
   --conf "spark.driver.extraJavaOptions=-Djava.security.auth.login.config=./jaas.conf" \

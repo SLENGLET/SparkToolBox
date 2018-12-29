@@ -56,7 +56,7 @@ object Exercice4 {
           UserGroupInformation.setConfiguration(HbaseWriteConfiguration.hbase_conf)
           if (UserGroupInformation.isSecurityEnabled) {
 
-            val loggedUGI: UserGroupInformation = UserGroupInformation.loginUserFromKeytabAndReturnUGI("dco_app_edma@LENGLET.FR", "/etc/security/keytabs/dco_app_edma.keytab")
+            val loggedUGI: UserGroupInformation = UserGroupInformation.loginUserFromKeytabAndReturnUGI("app_toolbox@LENGLET.FR", "/etc/security/keytabs/app_toolbox.keytab")
             val c: Configuration = HbaseWriteConfiguration.hbase_conf
             loggedUGI.doAs(new PrivilegedAction[Void] {
               override def run() = {

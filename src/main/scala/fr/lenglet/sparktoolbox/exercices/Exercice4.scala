@@ -28,7 +28,7 @@ import org.apache.hadoop.security.UserGroupInformation
 import org.apache.hadoop.conf.Configuration
 import java.security.PrivilegedAction
 import org.apache.hadoop.hbase.client.{HTableInterface, HConnectionManager, HConnection, HBaseAdmin}
-import org.apache.hadoop.hbase.client.{HTableInterface, Put}
+import org.apache.hadoop.hbase.client.{HTableInterface, Put, Row}
 import org.apache.hadoop.hbase.util.Bytes
 
 object Exercice4 {
@@ -64,19 +64,35 @@ object Exercice4 {
 
                   val hConnection: HConnection = HConnectionManager.createConnection(c)
                   val table: HTableInterface = hConnection.getTable(HbaseWriteConfiguration.table_name)
+                  var lr = List[Row]()
 
 
                   partition.foreach(p => {
+
                     val rowkey = String.valueOf(System.currentTimeMillis() / 1000)
                     println("topic : " + p.topic() + " message : " + p.value())
-                    hwrite.save(rowkey, "messages", p.value(), "d", table)
+                    var lp = hwrite.createList(rowkey, "messages", p.value(), "d", table)
+                    lr = lp :: lr
+                    //hwrite.save(rowkey, "messages", p.value(), "d", table)
                   })
+
+                  val results = new Array[AnyRef](lr.length)
+                  hwrite.saveBatch(lr, table, results)
+                  println(lr.length+"### ARRAY ###" +results.mkString(","))
+                  hConnection.close()
 
                 }
                 catch{
-                  case io: IOException => {
-                    println("io exception")
+
+                  case ia: IllegalArgumentException => println("illegal arg. exception")
+                  case is: IllegalStateException    => println("illegal state exception")
+                  case io: IOException              => println("IO exception")
+                  case unformat => {
+                    println("### unformat exception ###" + unformat)
                   }
+                }
+                finally {
+                  println("### Fin de cycle, on close")
                 }
                 null
               }

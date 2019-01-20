@@ -6,6 +6,7 @@ import kafka.serializer.StringDecoder
 import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
 import main.scala.fr.lenglet.sparktoolbox.write.hbase.HbaseWrite
 import main.scala.fr.lenglet.sparktoolbox.write.hbase.HbaseWriteConfiguration
+import org.apache.hadoop.hbase.NotServingRegionException
 
 /**
   * Date :::: 10/08/2018
@@ -83,10 +84,11 @@ object Exercice4 {
 
                 }
                 catch{
-
-                  case ia: IllegalArgumentException => println("illegal arg. exception")
-                  case is: IllegalStateException    => println("illegal state exception")
-                  case io: IOException              => println("IO exception")
+                  case ns: NotServingRegionException => println("@@@@ Impossible de write dans hbase :NotServingRegionException")
+                  case it: InterruptedException => println("@@@@ interrupted. exception")
+                  case ia: IllegalArgumentException => println("@@@ illegal arg. exception")
+                  case is: IllegalStateException    => println("@@@ illegal state exception")
+                  case io: IOException              => println("@@@ IO exception")
                   case unformat => {
                     println("### unformat exception ###" + unformat)
                   }

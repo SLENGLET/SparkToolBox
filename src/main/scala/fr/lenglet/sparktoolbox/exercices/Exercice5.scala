@@ -1,5 +1,6 @@
 package fr.lenglet.sparktoolbox.exercices
 
+import kafka.common.KafkaException
 import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
 import main.scala.fr.lenglet.sparktoolbox.write.kafka.{KafkaWrite, KafkaWriteConfiguration}
 import main.scala.fr.lenglet.sparktoolbox.write.orientdb.OrientDBWrite
@@ -10,8 +11,8 @@ import org.apache.spark.streaming.kafka010.{ConsumerStrategies, LocationStrategi
 import org.apache.tinkerpop.gremlin.orientdb.{OrientGraph, OrientGraphFactory}
 
 /**
-  * Date :::: 19/01/2019
-  * Exercice :::: read messages from kafka topic , write in orientdb dbgraph and kafka topic output
+  * Date :::: 03/02/2019
+  * Exercice :::: read messages from kafka topic.input , write in orientdb dbgraph and kafka topic.output
   *
   */
 
@@ -25,7 +26,6 @@ object Exercice5 {
     val kread = new KafkaRead()
     val owrite = new OrientDBWrite()
     val kwrite = new KafkaWrite
-
 
     /* Kerberos */
 
@@ -48,7 +48,7 @@ object Exercice5 {
 
               println("### element ### " + p.value())
               owrite.saveVertex(graph,p.value(),OrientDBWriteConfiguration.oclass)
-              kwrite.writeMessages(p.value()+" écrit dans orient",p.key(),brokers,KafkaWriteConfiguration.keydeserializer,KafkaWriteConfiguration.valuedeserializer,KafkaWriteConfiguration.topicoutput)
+              kwrite.writeMessages(brokers,"message "+p.value()+" écrit dans le graph ",p.key())
 
             })
             graph.commit()
@@ -56,7 +56,7 @@ object Exercice5 {
           }
           catch {
 
-            case unformat => println("### unformat exception ###" + unformat)
+            case unformat => println("### unformat exception ###" + unformat.getCause())
               graph.rollback()
 
           }

@@ -7,7 +7,7 @@ import java.util.Properties
 //https://www.programcreek.com/scala/index.php?api=org.apache.kafka.clients.producer.ProducerRecord
 
 
-trait KafkaWriteInterface {
+trait KafkaWriteInterface extends Serializable {
   def setTopic(topics: String): Set[String] {
 
   }
@@ -16,7 +16,7 @@ trait KafkaWriteInterface {
 
   }
 
-  def writeMessages(mess: String, key : String, bootstrap: String, keydeserializer: String, valuedeserializer: String, top: String): Unit {
+  def writeMessages(bootstrap: String, mess: String, key: String): Unit {
 
 
   }
@@ -37,19 +37,25 @@ class KafkaWrite extends KafkaWriteInterface {
       "security.protocol" -> KafkaWriteConfiguration.securityprotocol,
       "sasl.kerberos.service.name" -> KafkaWriteConfiguration.saslkerberosservicename,
       "auto.offset.reset" -> KafkaWriteConfiguration.autooffsetreset,
-      "key.deserializer" -> KafkaWriteConfiguration.keydeserializer,
-      "value.deserializer" -> KafkaWriteConfiguration.valuedeserializer)
+      "key.deserializer" -> KafkaWriteConfiguration.keyserializer,
+      "value.deserializer" -> KafkaWriteConfiguration.valueserializer)
     MapKafKaParams
   }
 
-  def writeMessages(mess: String, key : String, bootstrap: String, keydeserializer: String, valuedeserializer: String, top: String): Unit = {
+  def writeMessages(bootstrap: String, mess: String, key: String): Unit = {
     val props = new Properties()
     props.put("bootstrap.servers", bootstrap)
-    props.put("key.serializer", keydeserializer)
-    props.put("value.serializer", valuedeserializer)
+    props.put("key.serializer", KafkaWriteConfiguration.keyserializer)
+    props.put("value.serializer", KafkaWriteConfiguration.valueserializer)
+    props.put("request.required.acks", KafkaWriteConfiguration.requestrequiredacks)
+    props.put("security.protocol", KafkaWriteConfiguration.securityprotocol)
+    props.put("producer.type", KafkaWriteConfiguration.producertype)
+    props.put("sasl.kerberos.service.name", KafkaWriteConfiguration.saslkerberosservicename)
     val producer = new KafkaProducer[String, String](props)
-    val record = new ProducerRecord(top, key, mess)
+    val record = new ProducerRecord(KafkaWriteConfiguration.topicoutput, key, mess)
     producer.send(record)
     producer.close()
   }
 }
+
+

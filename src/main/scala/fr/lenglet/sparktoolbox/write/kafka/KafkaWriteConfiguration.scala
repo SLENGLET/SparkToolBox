@@ -7,8 +7,11 @@ object KafkaWriteConfiguration {
   val securityprotocol ="SASL_PLAINTEXT"
   val saslkerberosservicename = "kafka"
   val autooffsetreset = "latest"
-  val keydeserializer = "org.apache.kafka.common.serialization.StringDeserializer"
-  val valuedeserializer="org.apache.kafka.common.serialization.StringDeserializer"
+  val keyserializer = "org.apache.kafka.common.serialization.StringSerializer"
+  val valueserializer="org.apache.kafka.common.serialization.StringSerializer"
   val topicoutput ="topic.output"
+  val producertype="async"
+  val requestrequiredacks="1"
+
 
 }

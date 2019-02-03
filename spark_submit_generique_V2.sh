@@ -15,5 +15,5 @@ spark-submit \
   --conf "spark.yarn.security.tokens.hive.enabled=false" \
   --conf "spark.driver.extraJavaOptions=-Djava.security.auth.login.config=./jaas.conf" \
   --conf "spark.executor.extraJavaOptions=-Djava.security.auth.login.config=./jaas.conf -Djava.security.krb5.conf=/etc/krb5.conf -Djava.security.protocol=PLAINTEXTSASL" \/tmp/sparktoolbox-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
-datanode1.lenglet.fr:6667,datanode3.lenglet.fr:6667,datanode2.lenglet.fr:6667 datanode1.lenglet.fr:2181,datanode3.lenglet.fr:2181,datanode2.lenglet.fr:2181 teststef6
+datanode1.lenglet.fr:6667,datanode3.lenglet.fr:6667,datanode2.lenglet.fr:6667 datanode1.lenglet.fr:2181,datanode3.lenglet.fr:2181,datanode2.lenglet.fr:2181 topic.input
 

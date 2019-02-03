@@ -1,6 +1,7 @@
 package fr.lenglet.sparktoolbox.exercices
 
 import main.scala.fr.lenglet.sparktoolbox.read.kafka.KafkaRead
+import main.scala.fr.lenglet.sparktoolbox.write.kafka.{KafkaWrite, KafkaWriteConfiguration}
 import main.scala.fr.lenglet.sparktoolbox.write.orientdb.OrientDBWrite
 import main.scala.fr.lenglet.sparktoolbox.write.orientdb.OrientDBWriteConfiguration
 import org.apache.spark.SparkConf
@@ -10,7 +11,7 @@ import org.apache.tinkerpop.gremlin.orientdb.{OrientGraph, OrientGraphFactory}
 
 /**
   * Date :::: 19/01/2019
-  * Exercice :::: read messages from kafka topic , write in orientdb dbgraph
+  * Exercice :::: read messages from kafka topic , write in orientdb dbgraph and kafka topic output
   *
   */
 
@@ -23,6 +24,7 @@ object Exercice5 {
 
     val kread = new KafkaRead()
     val owrite = new OrientDBWrite()
+    val kwrite = new KafkaWrite
 
 
     /* Kerberos */
@@ -42,15 +44,14 @@ object Exercice5 {
 
           try {
 
-
             partition.foreach(p => {
 
               println("### element ### " + p.value())
               owrite.saveVertex(graph,p.value(),OrientDBWriteConfiguration.oclass)
+              kwrite.writeMessages(p.value()+" écrit dans orient",p.key(),brokers,KafkaWriteConfiguration.keydeserializer,KafkaWriteConfiguration.valuedeserializer,KafkaWriteConfiguration.topicoutput)
 
             })
             graph.commit()
-
 
           }
           catch {

@@ -25,7 +25,7 @@ object Exercice5 {
 
     val kread = new KafkaRead()
     val owrite = new OrientDBWrite()
-    val kwrite = new KafkaWrite
+    val kwrite = new KafkaWrite()
 
     /* Kerberos */
 
@@ -46,19 +46,18 @@ object Exercice5 {
 
             partition.foreach(p => {
 
-              println("### element ### " + p.value())
+              println("### message ### " + p.value())
+              println("### key ### " + p.key())
               owrite.saveVertex(graph,p.value(),OrientDBWriteConfiguration.oclass)
               kwrite.writeMessages(brokers,"message "+p.value()+" écrit dans le graph ",p.key())
 
             })
             graph.commit()
-
           }
           catch {
 
             case unformat => println("### unformat exception ###" + unformat.getCause())
               graph.rollback()
-
           }
           finally {
             println("### Fin de cycle, on close")

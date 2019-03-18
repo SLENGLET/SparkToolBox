@@ -24,12 +24,10 @@ class TestExercice3 extends FunSuite with SharedSparkContext {
     val rawTrav = resultRDDT.map(x => (x.id, (x.city, x.country)))
 
     val rawUnion = rawPers.leftOuterJoin(rawTrav)
-    println(rawUnion.count())
 
-    // Test 3.3
+    // Test 3.1
     assert(rawUnion.count() == 10)
     var rawGroup = rawUnion.groupByKey()
-    //println(rawGroup.count())
 
     // Test 3.2
     assert(rawGroup.count() == 5)
@@ -41,6 +39,7 @@ class TestExercice3 extends FunSuite with SharedSparkContext {
         var test =  x._2.toList
         // Test 3.3
         assert(test(0)._1._1  === expected1)
+        assert(test(0)._1._2  === expected2)
       }
     })
   }

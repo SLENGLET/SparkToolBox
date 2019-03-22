@@ -89,10 +89,6 @@
             <artifactId>spark-streaming_2.10</artifactId>
         </dependency>
         <dependency>
-            <groupId>info.cukes</groupId>
-            <artifactId>cucumber-scala_2.10</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
         </dependency>
@@ -111,6 +107,29 @@
         <dependency>
         <groupId>com.holdenkarau</groupId>
         <artifactId>spark-testing-base_2.11</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-core</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -134,11 +153,6 @@
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-streaming_2.10</artifactId>
                 <version>2.0.0-preview</version>
-            </dependency>
-            <dependency>
-                <groupId>info.cukes</groupId>
-                <artifactId>cucumber-scala_2.10</artifactId>
-                <version>1.2.5</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.hbase</groupId>
@@ -171,6 +185,18 @@
                 <groupId>com.holdenkarau</groupId>
                 <artifactId>spark-testing-base_2.11</artifactId>
                 <version>2.0.0-preview_0.4.1-preview</version>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-java</artifactId>
+                <version>4.2.6</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <version>4.2.6</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -170,7 +170,6 @@
                 <version>2.9.7</version>
                 <type>bundle</type>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.orientechnologies/orientdb-client -->
             <dependency>
                 <groupId>com.orientechnologies</groupId>
                 <artifactId>orientdb-client</artifactId>

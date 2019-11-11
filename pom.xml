@@ -105,31 +105,23 @@
             <artifactId>orientdb-gremlin</artifactId>
         </dependency>
         <dependency>
-        <groupId>com.holdenkarau</groupId>
-        <artifactId>spark-testing-base_2.11</artifactId>
+            <groupId>com.holdenkarau</groupId>
+            <artifactId>spark-testing-base_2.11</artifactId>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
+            <version>4.2.6</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
+            <version>4.2.6</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-core</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <scope>compile</scope>
+            <version>4.2.6</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -170,6 +162,7 @@
                 <version>2.9.7</version>
                 <type>bundle</type>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.orientechnologies/orientdb-client -->
             <dependency>
                 <groupId>com.orientechnologies</groupId>
                 <artifactId>orientdb-client</artifactId>
@@ -189,13 +182,16 @@
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-java</artifactId>
                 <version>4.2.6</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-junit</artifactId>
                 <version>4.2.6</version>
-                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.cucumber</groupId>
+                <artifactId>cucumber-junit</artifactId>
+                <version>4.2.6</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

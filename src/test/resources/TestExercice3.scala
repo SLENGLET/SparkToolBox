@@ -1,9 +1,8 @@
-package test
+package test.resources
 
-import com.holdenkarau.spark.testing.{RDDComparisons, SharedSparkContext}
-import org.scalatest.FunSuite
-
+import com.holdenkarau.spark.testing.SharedSparkContext
 import fr.lenglet.sparktoolbox.exercices.Exercice3.{rawPersonne, rawTravel}
+import org.scalatest.FunSuite
 
 
 class TestExercice3 extends FunSuite with SharedSparkContext {

@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resource/Exercice1.feature"}
+        features = {"src/test/resources/Exercice1.feature"}
 )
-public class RunCukeTests {
+class RunCukeTests {
 
 }

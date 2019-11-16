@@ -1,4 +1,4 @@
-package test.resources
+package test
 
 import com.holdenkarau.spark.testing.{RDDComparisons, SharedSparkContext}
 import fr.lenglet.sparktoolbox.exercices.Exercice1.rawPersonne

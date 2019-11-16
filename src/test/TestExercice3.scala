@@ -1,4 +1,4 @@
-package test.resources
+package test
 
 import com.holdenkarau.spark.testing.SharedSparkContext
 import fr.lenglet.sparktoolbox.exercices.Exercice3.{rawPersonne, rawTravel}

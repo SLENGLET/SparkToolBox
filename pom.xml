@@ -35,7 +35,7 @@
                     <!-- If you have classpath issue like NoDefClassError,... -->
                     <!-- useManifestOnlyJar>false</useManifestOnlyJar -->
                     <includes>
-                        <include>**/*Test.*</include>
+                        <include>**/*.java</include>
                         <include>**/*Suite.*</include>
                     </includes>
                 </configuration>

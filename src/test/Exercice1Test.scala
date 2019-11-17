@@ -5,7 +5,7 @@ import fr.lenglet.sparktoolbox.exercices.Exercice1.rawPersonne
 import org.scalatest.FunSuite
 
 
-class TestExercice1 extends FunSuite with SharedSparkContext with RDDComparisons {
+class Exercice1Test extends FunSuite with SharedSparkContext with RDDComparisons {
 
   test("Test rawPersonne") {
 

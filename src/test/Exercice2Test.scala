@@ -4,7 +4,7 @@ import fr.lenglet.sparktoolbox.exercices.Exercice2.messageToMap
 import org.scalatest.FunSuite
 
 
-class TestExercice2 extends FunSuite {
+class Exercice2Test extends FunSuite {
 
   test("Test messageToMap match OK") {
     val jsonTest = "{\"id\": 1,  \"nom\":\"unit\", \"prenom\":\"test\"}"

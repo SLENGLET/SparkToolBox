@@ -5,7 +5,7 @@ import fr.lenglet.sparktoolbox.exercices.Exercice3.{rawPersonne, rawTravel}
 import org.scalatest.FunSuite
 
 
-class TestExercice3 extends FunSuite with SharedSparkContext {
+class Exercice3Test extends FunSuite with SharedSparkContext {
 
   test("Test Union rawPersonne rawTravel") {
 

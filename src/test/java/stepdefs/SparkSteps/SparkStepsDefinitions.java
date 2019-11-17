@@ -15,7 +15,10 @@ public class SparkStepsDefinitions {
     public void le_job_spark_lancé(String string) {
         // Write code here that turns the phrase above into concrete actions
         try {
-            sc = new SparkContext(new SparkConf().setMaster("local[1]").setAppName(string));
+            sc = new SparkContext(new SparkConf()
+                    .setMaster("local[1]")
+                    .setAppName(string)
+                    .set("spark.testing.memory", "471859200"));
             System.out.print(sc.appName());
         } catch (Exception e) {
             throw e;

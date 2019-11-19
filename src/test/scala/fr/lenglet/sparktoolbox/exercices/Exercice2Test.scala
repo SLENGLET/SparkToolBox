@@ -1,4 +1,4 @@
-package test
+package test.scala.fr.lenglet.sparktoolbox.exercices
 
 import fr.lenglet.sparktoolbox.exercices.Exercice2.messageToMap
 import org.scalatest.FunSuite

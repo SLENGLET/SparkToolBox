@@ -1,7 +1,7 @@
 package test.scala.fr.lenglet.sparktoolbox.exercices
 
 import com.holdenkarau.spark.testing.{RDDComparisons, SharedSparkContext}
-import fr.lenglet.sparktoolbox.exercices.Exercice1.rawPersonne
+import _root_.fr.lenglet.sparktoolbox.exercices.Exercice1.rawPersonne
 import org.scalatest.FunSuite
 
 

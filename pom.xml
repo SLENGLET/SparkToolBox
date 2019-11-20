@@ -12,8 +12,10 @@
         <maven.compiler.version>3.6.0</maven.compiler.version>
         <useIncrementalCompilation>false</useIncrementalCompilation>
     </properties>
+
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

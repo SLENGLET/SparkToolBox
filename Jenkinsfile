@@ -20,18 +20,28 @@ pipeline {
                 sh "mkdir -p $WORKSPACE/repo"
                 sh "git clone $BUILD_SCRIPTS_GIT repo/$BUILD_SCRIPTS"
                 sh "chmod -R +x $WORKSPACE/repo/$BUILD_SCRIPTS"
+                
+                sh "cd $WORKSPACE/repo/$BUILD_SCRIPTS"
+            }
+        }
+        stage('Compile') {
+            steps {
+                echo 'Compile'
+                
+                sh "mvn compile"
             }
         }
         stage('Test : Junit + Cucumber') {
             steps {
                 echo 'Build Test : Junit + Cucumber'
-                sh "mvn clean test -Dtest=**/* -DfailIfNoTests=false -e"
+                
+                sh "mvn test -Dtest=**/* -DfailIfNoTests=false -e"
             }
         }
         stage('Build Install') {
             steps {
                 echo 'Build install uber jar'
-                sh "mvn install"
+                sh "mvn clean install"
             }
         }
         stage('Deploy') {
